@@ -2626,26 +2626,15 @@ html[data-ansicht]:not([data-ansicht="rechner"]) .hero-titel {
 }
 
 @media (max-width: 600px) {
-    /* über der Menüleiste unten; nur das Symbol, damit wenig verdeckt wird */
+    /* über der Menüleiste unten */
     .hilfe {
         inset-block-end: calc(84px + env(safe-area-inset-bottom));
         inset-inline-end: 12px;
     }
 
     .hilfe-knopf {
-        width: 54px;
-        height: 54px;
-        padding: 0;
-        justify-content: center;
-    }
-
-    .hilfe-knopf-text {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        overflow: hidden;
-        clip: rect(0 0 0 0);
-        white-space: nowrap;
+        padding: 10px 16px 10px 12px;
+        font-size: 0.95rem;
     }
 
     .hilfe-offen .hilfe {

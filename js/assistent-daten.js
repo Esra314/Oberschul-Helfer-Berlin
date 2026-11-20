@@ -18,8 +18,8 @@
 
     var UI = {
         de: {
-            open: "Fragen?",
-            title: "Frage-Helfer",
+            open: "Frage-Assistent",
+            title: "Frage-Assistent",
             sub: "Schnelle Antworten · ohne KI · nichts wird gesendet",
             placeholder: "Ihre Frage …",
             send: "Senden",
@@ -27,13 +27,13 @@
             restart: "Neu starten",
             topics: "Beliebte Themen",
             more: "Passt vielleicht auch:",
-            hello: "Hallo! 👋 Ich bin der Frage-Helfer. Ich beantworte kurze Fragen zum Wechsel auf die Oberschule in Berlin. Schreiben Sie Ihre Frage oder tippen Sie auf ein Thema.",
+            hello: "Hallo! 👋 Ich bin der Frage-Assistent. Ich beantworte kurze Fragen zum Wechsel auf die Oberschule in Berlin. Schreiben Sie Ihre Frage oder tippen Sie auf ein Thema.",
             unknown: "Dazu habe ich leider keine passende Antwort. 🙈 Ich kenne mich nur mit dem Wechsel auf die Oberschule in Berlin aus. Vielleicht hilft eines dieser Themen oder die offizielle Seite:",
             note: "Vorbereitete Antworten, ohne Gewähr. Verbindlich ist die Grundschule."
         },
         en: {
-            open: "Questions?",
-            title: "Question helper",
+            open: "Question assistant",
+            title: "Question assistant",
             sub: "Quick answers · no AI · nothing is sent",
             placeholder: "Your question …",
             send: "Send",
@@ -41,13 +41,13 @@
             restart: "Start over",
             topics: "Popular topics",
             more: "This might also help:",
-            hello: "Hi! 👋 I'm the question helper. I answer short questions about moving on to secondary school (Oberschule) in Berlin. Type your question or tap a topic.",
+            hello: "Hi! 👋 I'm the question assistant. I answer short questions about moving on to secondary school (Oberschule) in Berlin. Type your question or tap a topic.",
             unknown: "Sorry, I don't have an answer for that. 🙈 I only know about moving on to secondary school in Berlin. Maybe one of these topics or the official page helps:",
             note: "Prepared answers, no guarantee. The primary school has the final word."
         },
         tr: {
-            open: "Soru sor",
-            title: "Soru yardımcısı",
+            open: "Soru asistanı",
+            title: "Soru asistanı",
             sub: "Hızlı cevaplar · yapay zekâ yok · hiçbir şey gönderilmez",
             placeholder: "Sorunuz …",
             send: "Gönder",
@@ -55,12 +55,12 @@
             restart: "Yeniden başla",
             topics: "Sık sorulan konular",
             more: "Bunlar da işinize yarayabilir:",
-            hello: "Merhaba! 👋 Ben soru yardımcısıyım. Berlin'de ortaokula (Oberschule) geçişle ilgili kısa soruları cevaplıyorum. Sorunuzu yazın ya da bir konuya dokunun.",
+            hello: "Merhaba! 👋 Ben soru asistanıyım. Berlin'de ortaokula (Oberschule) geçişle ilgili kısa soruları cevaplıyorum. Sorunuzu yazın ya da bir konuya dokunun.",
             unknown: "Maalesef buna uygun bir cevabım yok. 🙈 Yalnızca Berlin'de ortaokula geçiş konusunu biliyorum. Belki şu konulardan biri ya da resmî sayfa yardımcı olur:",
             note: "Hazır cevaplar, garanti verilmez. Bağlayıcı olan ilkokulun söyledikleridir."
         },
         ar: {
-            open: "أسئلة؟",
+            open: "مساعد الأسئلة",
             title: "مساعد الأسئلة",
             sub: "إجابات سريعة · بدون ذكاء اصطناعي · لا يُرسل أي شيء",
             placeholder: "سؤالك …",
@@ -74,7 +74,7 @@
             note: "إجابات معدّة مسبقاً، بدون ضمان. القرار الملزم للمدرسة الابتدائية."
         },
         uk: {
-            open: "Питання?",
+            open: "Помічник з питань",
             title: "Помічник з питань",
             sub: "Швидкі відповіді · без ШІ · нічого не надсилається",
             placeholder: "Ваше питання …",
@@ -88,7 +88,7 @@
             note: "Підготовлені відповіді, без гарантії. Остаточне слово за початковою школою."
         },
         ru: {
-            open: "Вопросы?",
+            open: "Помощник",
             title: "Помощник по вопросам",
             sub: "Быстрые ответы · без ИИ · ничего не отправляется",
             placeholder: "Ваш вопрос …",
@@ -156,9 +156,9 @@
         },
         {
             id: "wer",
-            de: { a: "Ich bin ein kleiner Frage-Helfer auf dieser Seite. Ich bin keine KI: Ich suche zu Ihrer Frage die passende vorbereitete Antwort. Ihre Fragen bleiben auf Ihrem Gerät. 🔒", w: ["!wer bist du", "!was bist du", "bist du ein bot", "bist du eine ki", "bist du ein mensch", "chatgpt", "!roboter"] },
-            en: { a: "I'm a small question helper on this page. I'm not an AI: I look for the prepared answer that fits your question. Your questions stay on your device. 🔒", w: ["!who are you", "!what are you", "are you a bot", "are you an ai", "are you human", "chatgpt", "!robot"] },
-            tr: { a: "Ben bu sayfadaki küçük bir soru yardımcısıyım. Yapay zekâ değilim: Sorunuza uyan hazır cevabı buluyorum. Sorularınız cihazınızda kalır. 🔒", w: ["!sen kimsin", "!kimsin", "!nesin", "bot musun", "yapay zeka misin", "insan misin", "chatgpt", "!robot"] },
+            de: { a: "Ich bin der kleine Frage-Assistent dieser Seite. Ich bin keine KI: Ich suche zu Ihrer Frage die passende vorbereitete Antwort. Ihre Fragen bleiben auf Ihrem Gerät. 🔒", w: ["!wer bist du", "!was bist du", "bist du ein bot", "bist du eine ki", "bist du ein mensch", "chatgpt", "!roboter"] },
+            en: { a: "I'm the small question assistant on this page. I'm not an AI: I look for the prepared answer that fits your question. Your questions stay on your device. 🔒", w: ["!who are you", "!what are you", "are you a bot", "are you an ai", "are you human", "chatgpt", "!robot"] },
+            tr: { a: "Ben bu sayfanın küçük soru asistanıyım. Yapay zekâ değilim: Sorunuza uyan hazır cevabı buluyorum. Sorularınız cihazınızda kalır. 🔒", w: ["!sen kimsin", "!kimsin", "!nesin", "bot musun", "yapay zeka misin", "insan misin", "chatgpt", "!robot"] },
             ar: { a: "أنا مساعد أسئلة صغير في هذه الصفحة. لست ذكاءً اصطناعياً: أبحث عن الإجابة المعدّة المناسبة لسؤالك. أسئلتك تبقى على جهازك. 🔒", w: ["!من انت", "!ما انت", "هل انت روبوت", "هل انت ذكاء اصطناعي", "هل انت انسان", "chatgpt"] },
             uk: { a: "Я маленький помічник з питань на цій сторінці. Я не ШІ: я шукаю підготовлену відповідь, що підходить до вашого питання. Ваші питання залишаються на вашому пристрої. 🔒", w: ["!хто ти", "!що ти таке", "ти бот", "ти робот", "ти штучний інтелект", "chatgpt"] },
             ru: { a: "Я маленький помощник по вопросам на этой странице. Я не ИИ: я ищу подготовленный ответ, который подходит к вашему вопросу. Ваши вопросы остаются на вашем устройстве. 🔒", w: ["!кто ты", "!что ты такое", "ты бот", "ты робот", "ты искусственный интеллект", "chatgpt"] }
