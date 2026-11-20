@@ -22,6 +22,8 @@ Gymnasium, Integrierte Sekundarschule (ISS) und Gemeinschaftsschule.
   Checkliste zum Ausfüllen (Fremdsprachen, Ganztag, Profil, Mittagessen, Tag der offenen Tür, Notizen)
 - Schulen merken und nebeneinander vergleichen (nur lokal im Browser gespeichert, `js/merkliste.js`)
 - Checkliste für die Schulwahl und 5 Fragen für den Tag der offenen Tür
+- Frage-Helfer: kleines Chat-Fenster („Fragen?“) mit vorbereiteten Antworten in allen 6 Sprachen,
+  erkennt auch Begrüßungen und Dank; ohne KI, läuft nur im Browser, nichts wird gesendet
 - Keine Daten werden gesendet oder gespeichert, keine Cookies
 - Impressum und Datenschutzerklärung
 
@@ -42,6 +44,8 @@ js/rechner.js       Berechnung (ohne Abhängigkeiten, auch in Node testbar)
 js/i18n.js          Übersetzungen
 js/umkreis.js       Umkreissuche (ohne Abhängigkeiten, testbar)
 js/app.js           Oberfläche
+js/assistent.js     Frage-Helfer (Suche und Chat-Fenster, testbar)
+js/assistent-daten.js  Fragen, Antworten und Suchwörter des Frage-Helfers
 data/schulen.js     Schulen und Postleitzahlen (erzeugt)
 scripts/            Skript zum Aktualisieren der Schuldaten
 vendor/leaflet/     Kartenbibliothek Leaflet 1.9.4 (BSD-2-Clause)
