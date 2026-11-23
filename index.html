@@ -345,6 +345,10 @@
                 <table id="vergleichTabelle" class="vergleich-tabelle"></table>
             </div>
             <p id="vergleichLegende" class="klein"></p>
+            <div class="kalender-box nur-bildschirm">
+                <button type="button" id="meineTermineKalender" class="kalender-gross" data-i18n="cal_mine">Termine meiner Schulen in den Kalender</button>
+                <p id="meineTermineInfo" class="klein"></p>
+            </div>
             <div class="knoepfe nur-bildschirm">
                 <button type="button" id="vergleichLeeren" class="zweitrangig" data-i18n="compare_clear">Alle löschen</button>
             </div>
@@ -388,6 +392,10 @@
             <p data-i18n="dont_miss_text">Fast alle Oberschulen laden zum Tag der offenen Tür oder zu Infoabenden ein, meist zwischen November und Januar. Dort lernen Sie die Schule kennen und können Fragen stellen. Die Termine stehen auf der Webseite der Schule. Sie können die Schule auch anrufen.</p>
         </div>
         <ul id="terminListe" class="termin-liste"></ul>
+        <div class="kalender-box nur-bildschirm">
+            <button type="button" id="termineKalender" class="kalender-gross" data-i18n="cal_all">Alle Termine in den Kalender</button>
+            <p class="klein" data-i18n="cal_note">Die Kalender-Datei wird auf Ihrem Gerät erstellt. Es wird nichts gesendet.</p>
+        </div>
         <p class="klein" data-i18n="dates_note">Bitte prüfen Sie die Termine auf der offiziellen Seite. Sie können sich ändern.</p>
         <a class="weiter nur-bildschirm" href="#fragen" data-i18n="next_info">Weiter: Infos zu den Schularten</a>
     </section>
@@ -459,6 +467,7 @@
 <script src="js/rechner.js"></script>
 <script src="js/umkreis.js"></script>
 <script src="js/merkliste.js"></script>
+<script src="js/kalender.js"></script>
 <script src="js/i18n.js"></script>
 <script src="js/app.js"></script>
 <script src="js/assistent-daten.js"></script>

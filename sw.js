@@ -5,7 +5,7 @@
  * vom Server (Updates sind sofort sichtbar). Nur ohne Internet wird die
  * gespeicherte Kopie genutzt. VERSION nur erhöhen, wenn sich die Liste DATEIEN ändert.
  */
-const VERSION = "v9";
+const VERSION = "v10";
 const CACHE = "oberschul-helfer-" + VERSION;
 
 const DATEIEN = [
@@ -23,6 +23,7 @@ const DATEIEN = [
     "js/rechner.js",
     "js/umkreis.js",
     "js/merkliste.js",
+    "js/kalender.js",
     "js/i18n.js",
     "js/app.js",
     "js/assistent-daten.js",

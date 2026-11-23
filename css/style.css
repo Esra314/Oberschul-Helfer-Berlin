@@ -2678,3 +2678,84 @@ html[data-ansicht]:not([data-ansicht="rechner"]) .hero-titel {
         display: none !important;
     }
 }
+
+/* ---------- Kalender: Termine als .ics-Datei speichern ---------- */
+
+button.kalender-knopf {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    min-height: 32px;
+    padding: 3px 12px;
+    border: 1px solid var(--v, var(--blau));
+    border-radius: 999px;
+    background: #fff;
+    color: var(--v-dunkel, var(--blau-dunkel));
+    font: inherit;
+    font-size: 0.8rem;
+    font-weight: 600;
+    line-height: 1.4;
+    white-space: nowrap;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+button.kalender-knopf:hover {
+    background: var(--v-hell, var(--blau-hell));
+}
+
+.termin-liste .kalender-knopf {
+    grid-column: 2;
+    justify-self: start;
+}
+
+.sv-termine .kalender-knopf {
+    margin-block: 2px;
+}
+
+.kalender-box {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 14px;
+    margin: 12px 0 14px;
+}
+
+.kalender-box .klein {
+    margin: 0;
+}
+
+button.kalender-gross {
+    background: var(--v, var(--blau));
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    padding: 9px 18px;
+    font-weight: 600;
+}
+
+button.kalender-gross::before {
+    content: "📅 ";
+}
+
+button.kalender-gross:hover {
+    background: var(--v-dunkel, var(--blau-dunkel));
+}
+
+button.kalender-gross:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+    .termin-liste .kalender-knopf {
+        grid-column: 1;
+    }
+}
+
+@media print {
+    .kalender-knopf,
+    .kalender-box {
+        display: none !important;
+    }
+}
