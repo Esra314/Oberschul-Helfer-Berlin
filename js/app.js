@@ -319,8 +319,58 @@
             was.textContent = t(termin.text);
             li.appendChild(wann);
             li.appendChild(was);
+            if (!termin.wann) {
+                li.appendChild(kalenderKnopf([amtlicherTermin(termin)], t(termin.text), datum(termin.von)));
+            }
             liste.appendChild(li);
         });
+        var alle = document.getElementById("termineKalender");
+        if (alle && !alle.dataset.bereit) {
+            alle.dataset.bereit = "1";
+            alle.addEventListener("click", function () {
+                Kalender.herunterladen(TERMINE.filter(function (x) { return !x.wann; }).map(amtlicherTermin), "termine-wechsel-2027");
+            });
+        }
+    }
+
+    // ---------- Kalender (.ics wird im Browser erstellt, nichts wird gesendet) ----------
+
+    var AMTLICH_URL = "https://www.berlin.de/sen/bildung/schule/bildungswege/uebergang-weiterfuehrende-schule/wechsel-zur-7-klasse/";
+
+    function amtlicherTermin(termin) {
+        return {
+            titel: t(termin.text),
+            datum: termin.von,
+            bis: termin.bis,
+            beschreibung: t("cal_official"),
+            link: AMTLICH_URL
+        };
+    }
+
+    function schulTermin(s, x) {
+        return {
+            titel: t("td_" + x.a) + " – " + s.n,
+            datum: x.d,
+            von: x.v,
+            ende: x.b,
+            ort: s.n + ", " + s.s + ", " + s.z + " Berlin",
+            beschreibung: t("cal_check"),
+            link: x.l
+        };
+    }
+
+    // Kleiner Knopf "In den Kalender" neben einem Termin
+    function kalenderKnopf(termine, was, wann, dateiName) {
+        var knopf = document.createElement("button");
+        knopf.type = "button";
+        knopf.className = "kalender-knopf nur-bildschirm";
+        knopf.textContent = "📅 " + t("cal_add");
+        knopf.title = t("cal_add_title", { was: was, datum: wann });
+        knopf.setAttribute("aria-label", knopf.title);
+        knopf.addEventListener("click", function () {
+            Kalender.herunterladen(termine, termine[0].datum + "-" + (dateiName || was));
+        });
+        return knopf;
     }
 
     // ---------- Schulen in der Nähe ----------
@@ -723,6 +773,8 @@
                 var li = element("li", i >= 2 ? "verborgen" : "");
                 li.appendChild(neuerLink(x.l, terminText(x)));
                 if (x.q === "w") li.appendChild(element("small", "termin-quelle", " · " + t("src_web_short")));
+                li.appendChild(document.createTextNode(" "));
+                li.appendChild(kalenderKnopf([schulTermin(s, x)], t("td_" + x.a) + " " + s.n, datum(x.d), s.n));
                 terminBox.appendChild(li);
             });
             if (termine.length > 2) {
@@ -787,6 +839,24 @@
         return details;
     }
 
+    function meineTermine(ids) {
+        var liste = [];
+        ids.forEach(function (id) {
+            var s = schuleNachId[id];
+            kommendeTermine(s).forEach(function (x) { liste.push(schulTermin(s, x)); });
+        });
+        return liste.sort(function (a, b) { return a.datum < b.datum ? -1 : a.datum > b.datum ? 1 : 0; });
+    }
+
+    function zeigeMeineTermine(ids) {
+        var knopf = document.getElementById("meineTermineKalender");
+        var info = document.getElementById("meineTermineInfo");
+        if (!knopf || !info) return;
+        var anzahl = meineTermine(ids).length;
+        knopf.disabled = anzahl === 0;
+        info.textContent = anzahl ? t("cal_mine_count", { anzahl: anzahl }) + " · " + t("cal_note") : t("cal_mine_none");
+    }
+
     function zeigeVergleich() {
         var ids = merkliste.ids().filter(function (id) { return schuleNachId[id]; });
         var zaehler = document.getElementById("merkZaehler");
@@ -798,6 +868,7 @@
         document.getElementById("vergleichBereich").classList.toggle("verborgen", ids.length === 0);
         var tabelle = document.getElementById("vergleichTabelle");
         tabelle.textContent = "";
+        zeigeMeineTermine(ids);
         if (ids.length === 0) return;
 
         var schulen = ids.map(function (id) { return schuleNachId[id]; });
@@ -890,6 +961,12 @@
         document.getElementById("vergleichLegende").textContent = "ⓘ = " + t("sv_mark") + ". "
             + t("sv_dates_source", { datum: infoStand ? datum(infoStand) : "–" });
     }
+
+    document.getElementById("meineTermineKalender").addEventListener("click", function () {
+        var ids = merkliste.ids().filter(function (id) { return schuleNachId[id]; });
+        var termine = meineTermine(ids);
+        if (termine.length) Kalender.herunterladen(termine, "termine-meine-schulen");
+    });
 
     document.getElementById("vergleichLeeren").addEventListener("click", function () {
         merkliste.leeren();
