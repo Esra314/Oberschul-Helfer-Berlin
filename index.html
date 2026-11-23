@@ -293,6 +293,22 @@
             </fieldset>
             <p id="gym-hinweis" class="klein hinweis-orange verborgen"></p>
 
+            <div class="sfilter">
+                <button type="button" id="filterKnopf" class="sfilter-knopf" aria-expanded="false" aria-controls="filterFeld">
+                    <span><span aria-hidden="true">🎛️</span> <span data-i18n="flt_button">Filter: Schwerpunkt, Sprachen …</span> <span id="filterZahl" class="sfilter-zahl verborgen"></span></span>
+                    <span class="sfilter-pfeil" aria-hidden="true">▼</span>
+                </button>
+                <div id="filterFeld" class="sfilter-feld" hidden>
+                    <div id="filterGruppen"></div>
+                    <p class="sfilter-hinweis" data-i18n="flt_hint">Mehrere in einer Gruppe: Eins davon reicht. Angaben aus dem Berliner Schulverzeichnis, bitte auf der Webseite der Schule prüfen.</p>
+                    <div class="sfilter-fuss">
+                        <button type="button" id="filterLoeschen" class="sfilter-link" data-i18n="flt_clear">Alle löschen</button>
+                        <button type="button" id="filterFertig" class="sfilter-fertig">Fertig</button>
+                    </div>
+                </div>
+                <div id="filterAktiv" class="sfilter-aktiv verborgen"></div>
+            </div>
+
             <div class="knoepfe">
                 <button type="submit" data-i18n="btn_search">Schulen suchen</button>
             </div>
@@ -466,6 +482,7 @@
 <script src="data/schulinfos.js"></script>
 <script src="js/rechner.js"></script>
 <script src="js/umkreis.js"></script>
+<script src="js/filter.js"></script>
 <script src="js/merkliste.js"></script>
 <script src="js/kalender.js"></script>
 <script src="js/i18n.js"></script>

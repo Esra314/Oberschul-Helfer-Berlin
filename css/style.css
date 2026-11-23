@@ -2759,3 +2759,189 @@ button.kalender-gross:disabled {
         display: none !important;
     }
 }
+
+/* ---------- Filter in der Schulsuche (Schwerpunkt, Sprachen, Besonderes) ---------- */
+
+.sfilter {
+    margin-top: 14px;
+}
+
+.sfilter-knopf {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+    min-height: 48px;
+    padding: 10px 16px;
+    border: 1.5px solid #89CFF3;
+    border-radius: 14px;
+    background: linear-gradient(90deg, #e6f8fe, #f3eefb);
+    color: var(--blau-dunkel);
+    font: inherit;
+    font-weight: 700;
+    text-align: start;
+    cursor: pointer;
+}
+
+.sfilter-knopf:hover {
+    border-color: var(--blau);
+}
+
+.sfilter-knopf.offen {
+    border-radius: 14px 14px 0 0;
+}
+
+.sfilter-knopf.offen .sfilter-pfeil {
+    transform: rotate(180deg);
+}
+
+.sfilter-zahl {
+    display: inline-block;
+    min-width: 1.6em;
+    margin-inline-start: 4px;
+    padding: 0 8px;
+    border-radius: 999px;
+    background: #7469B6;
+    color: #fff;
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+.sfilter-feld {
+    padding: 4px 16px 14px;
+    border: 1.5px solid #89CFF3;
+    border-top: 0;
+    border-radius: 0 0 14px 14px;
+    background: #fbfeff;
+}
+
+.sfilter-gruppe {
+    margin: 12px 0 4px;
+}
+
+.sfilter-titel {
+    margin: 0 0 8px;
+    color: var(--text-leise);
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.sfilter-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 36px;
+    margin-block: 0 8px;
+    margin-inline: 0 6px;
+    padding: 6px 13px;
+    border: 1.5px solid #89CFF3;
+    border-radius: 999px;
+    background: #fff;
+    color: var(--blau-dunkel);
+    font: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.sfilter-chip:hover {
+    border-color: var(--blau);
+    background: var(--blau-hell);
+}
+
+.sfilter-chip[aria-pressed="true"] {
+    border-color: var(--blau);
+    background: var(--blau);
+    color: #fff;
+}
+
+.sfilter-chip[aria-pressed="true"]::before {
+    content: "✓";
+}
+
+.sfilter-chip:focus-visible,
+.sfilter-knopf:focus-visible,
+.sfilter-weg:focus-visible,
+.sfilter-link:focus-visible {
+    outline: 3px solid var(--blau);
+    outline-offset: 2px;
+}
+
+.sfilter-hinweis {
+    margin: 6px 0 0;
+    color: var(--text-leise);
+    font-size: 0.85rem;
+}
+
+.sfilter-fuss {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.sfilter-link {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--blau);
+    font: inherit;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.sfilter-fertig {
+    min-height: 42px;
+    padding: 8px 18px;
+    border: 0;
+    border-radius: 10px;
+    background: var(--blau);
+    color: #fff;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.sfilter-fertig:hover {
+    background: var(--blau-dunkel);
+}
+
+.sfilter-aktiv {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+    color: var(--text-leise);
+    font-size: 0.9rem;
+}
+
+.sfilter-weg {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 32px;
+    padding: 4px 11px;
+    border: 0;
+    border-radius: 999px;
+    background: var(--blau-hell);
+    color: var(--blau-dunkel);
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.sfilter-weg::after {
+    content: "✕";
+    font-size: 0.75rem;
+}
+
+@media print {
+    .sfilter-knopf,
+    .sfilter-feld {
+        display: none !important;
+    }
+}

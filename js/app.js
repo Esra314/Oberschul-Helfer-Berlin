@@ -153,6 +153,7 @@
         zeigeTermine();
         zeigeDatenquelle();
         aktualisiereGymHinweis();
+        zeigeFilter();
         zeigeVergleich();
         if (letzteSuche) {
             zeigeSuche(letzteSuche);
@@ -416,8 +417,14 @@
             privat: document.getElementById("privat").checked,
             radiusKm: Number(document.getElementById("radius").value)
         });
+        if (r.ok && filterAuswahl.length > 0) {
+            r.schulen = r.schulen.filter(function (s) {
+                return window.SchulFilter.passt(schulinfos[s.id], filterAuswahl);
+            });
+        }
         letzteSuche = r;
         zeigeSuche(r);
+        zeigeFilter();
         if (scrollen && r.ok) {
             document.getElementById("sucheErgebnis").scrollIntoView({ behavior: "smooth", block: "start" });
         }
@@ -438,7 +445,7 @@
         var km = document.getElementById("radius").value;
         document.getElementById("trefferAnzahl").textContent = r.schulen.length > 0
             ? t("near_count", { anzahl: r.schulen.length, km: km })
-            : t("near_none");
+            : t(filterAuswahl.length > 0 ? "flt_none" : "near_none");
 
         var liste = document.getElementById("schulListe");
         liste.textContent = "";
@@ -516,6 +523,109 @@
             zeichneKarte(r);
         }
     }
+
+    // ---------- Filter: Schwerpunkt, Fremdsprachen, Besonderes ----------
+
+    var filterAuswahl = [];
+
+    function filterName(o) {
+        return o.name || t(o.text);
+    }
+
+    function schalteFilter(schluessel) {
+        var i = filterAuswahl.indexOf(schluessel);
+        if (i === -1) filterAuswahl.push(schluessel); else filterAuswahl.splice(i, 1);
+        if (letzteSuche && letzteSuche.ok) sucheSchulen(false); else zeigeFilter();
+    }
+
+    function zeigeFilter() {
+        var gruppen = document.getElementById("filterGruppen");
+        gruppen.textContent = "";
+        window.SchulFilter.GRUPPEN.forEach(function (g) {
+            var box = document.createElement("div");
+            box.className = "sfilter-gruppe";
+            box.setAttribute("role", "group");
+            var titel = document.createElement("p");
+            titel.className = "sfilter-titel";
+            titel.id = "filterTitel-" + g.id;
+            titel.textContent = t(g.text);
+            box.setAttribute("aria-labelledby", titel.id);
+            box.appendChild(titel);
+            g.optionen.forEach(function (o) {
+                var schluessel = g.id + ":" + o.id;
+                var chip = document.createElement("button");
+                chip.type = "button";
+                chip.className = "sfilter-chip";
+                if (o.name) chip.lang = "de";
+                chip.textContent = filterName(o);
+                chip.setAttribute("aria-pressed", filterAuswahl.indexOf(schluessel) !== -1 ? "true" : "false");
+                chip.addEventListener("click", function () {
+                    schalteFilter(schluessel);
+                    var neu = document.querySelector('#filterGruppen [data-f="' + schluessel + '"]');
+                    if (neu) neu.focus();
+                });
+                chip.dataset.f = schluessel;
+                box.appendChild(chip);
+            });
+            gruppen.appendChild(box);
+        });
+
+        var zahl = document.getElementById("filterZahl");
+        zahl.textContent = String(filterAuswahl.length);
+        zahl.classList.toggle("verborgen", filterAuswahl.length === 0);
+
+        var aktiv = document.getElementById("filterAktiv");
+        aktiv.textContent = "";
+        aktiv.classList.toggle("verborgen", filterAuswahl.length === 0);
+        if (filterAuswahl.length > 0) {
+            var wort = document.createElement("span");
+            wort.textContent = t("flt_active");
+            aktiv.appendChild(wort);
+            filterAuswahl.forEach(function (schluessel) {
+                var o = window.SchulFilter.OPTION[schluessel];
+                if (!o) return;
+                var x = document.createElement("button");
+                x.type = "button";
+                x.className = "sfilter-weg";
+                if (o.name) x.lang = "de";
+                x.textContent = filterName(o);
+                x.setAttribute("aria-label", t("flt_remove", { name: filterName(o) }));
+                x.addEventListener("click", function () {
+                    schalteFilter(schluessel);
+                    var knopf = document.getElementById("filterKnopf");
+                    if (!document.querySelector("#filterAktiv .sfilter-weg")) knopf.focus();
+                });
+                aktiv.appendChild(x);
+            });
+        }
+
+        document.getElementById("filterFertig").textContent = letzteSuche && letzteSuche.ok && letzteSuche.schulen.length > 0
+            ? t("flt_show", { anzahl: letzteSuche.schulen.length })
+            : t("flt_done");
+    }
+
+    function oeffneFilter(auf) {
+        document.getElementById("filterFeld").hidden = !auf;
+        var knopf = document.getElementById("filterKnopf");
+        knopf.setAttribute("aria-expanded", auf ? "true" : "false");
+        knopf.classList.toggle("offen", auf);
+    }
+
+    document.getElementById("filterKnopf").addEventListener("click", function () {
+        oeffneFilter(document.getElementById("filterFeld").hidden);
+    });
+    document.getElementById("filterLoeschen").addEventListener("click", function () {
+        filterAuswahl = [];
+        if (letzteSuche && letzteSuche.ok) sucheSchulen(false); else zeigeFilter();
+    });
+    document.getElementById("filterFertig").addEventListener("click", function () {
+        oeffneFilter(false);
+        if (letzteSuche && letzteSuche.ok) {
+            document.getElementById("sucheErgebnis").scrollIntoView({ behavior: "smooth", block: "start" });
+        } else {
+            document.getElementById("filterKnopf").focus();
+        }
+    });
 
     // ---------- Details, Merkliste und Vergleich ----------
 
