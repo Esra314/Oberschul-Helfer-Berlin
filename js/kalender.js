@@ -171,7 +171,109 @@
         setTimeout(function () { URL.revokeObjectURL(url); }, 10000);
     }
 
-    var api = { erstelleIcs: erstelleIcs, dateiname: dateiname, herunterladen: herunterladen, falten: falten };
+    // ---------- Web-Kalender: Google und Outlook öffnen einen ausgefüllten Termin ----------
+
+    // Letzter Sonntag eines Monats (UTC-Tag), für Sommer-/Winterzeit in Berlin
+    function letzterSonntag(jahr, monat) {
+        var d = new Date(Date.UTC(jahr, monat, 0));
+        return d.getUTCDate() - d.getUTCDay();
+    }
+
+    // "+01:00" oder "+02:00" für eine Berliner Ortszeit
+    function berlinVersatz(iso, uhrzeit) {
+        var teile = iso.split("-").map(Number);
+        var jahr = teile[0], monat = teile[1], tag = teile[2];
+        var stunde = Number(String(uhrzeit || "12:00").split(":")[0]);
+        var sommer;
+        if (monat > 3 && monat < 10) sommer = true;
+        else if (monat < 3 || monat > 10) sommer = false;
+        else if (monat === 3) {
+            var m = letzterSonntag(jahr, 3);
+            sommer = tag > m || (tag === m && stunde >= 2);
+        } else {
+            var o = letzterSonntag(jahr, 10);
+            sommer = tag < o || (tag === o && stunde < 3);
+        }
+        return sommer ? "+02:00" : "+01:00";
+    }
+
+    function zeiten(termin) {
+        if (uhrzeitGueltig(termin.von)) {
+            var von = ("0" + termin.von).slice(-5);
+            var ende = uhrzeitGueltig(termin.ende) && termin.ende > termin.von ? ("0" + termin.ende).slice(-5) : plusStunden(von, 2);
+            return { ganztags: false, von: von, ende: ende };
+        }
+        return { ganztags: true };
+    }
+
+    function beschreibungText(termin) {
+        return [termin.beschreibung, termin.link].filter(Boolean).join("\n");
+    }
+
+    function abfrage(werte) {
+        return Object.keys(werte).filter(function (k) { return werte[k] !== undefined && werte[k] !== ""; })
+            .map(function (k) { return k + "=" + encodeURIComponent(werte[k]); }).join("&");
+    }
+
+    function googleLink(termin) {
+        var z = zeiten(termin);
+        var tag = nurZiffern(termin.datum);
+        var daten = z.ganztags
+            ? tag + "/" + nurZiffern(naechsterTag(termin.bis || termin.datum))
+            : tag + "T" + nurZiffern(z.von) + "00/" + tag + "T" + nurZiffern(z.ende) + "00";
+        return "https://calendar.google.com/calendar/render?" + abfrage({
+            action: "TEMPLATE",
+            text: termin.titel,
+            dates: daten,
+            ctz: z.ganztags ? undefined : "Europe/Berlin",
+            details: beschreibungText(termin),
+            location: termin.ort
+        });
+    }
+
+    // dienst: "live" (Outlook.com) oder "office" (Microsoft 365 für Arbeit/Schule)
+    function outlookLink(termin, dienst) {
+        var z = zeiten(termin);
+        var werte = {
+            path: "/calendar/action/compose",
+            rru: "addevent",
+            subject: termin.titel,
+            body: beschreibungText(termin),
+            location: termin.ort
+        };
+        if (z.ganztags) {
+            werte.startdt = termin.datum;
+            werte.enddt = naechsterTag(termin.bis || termin.datum);
+            werte.allday = "true";
+        } else {
+            werte.startdt = termin.datum + "T" + z.von + ":00" + berlinVersatz(termin.datum, z.von);
+            werte.enddt = termin.datum + "T" + z.ende + ":00" + berlinVersatz(termin.datum, z.ende);
+            werte.allday = "false";
+        }
+        var host = dienst === "office" ? "https://outlook.office.com" : "https://outlook.live.com";
+        return host + "/calendar/0/deeplink/compose?" + abfrage(werte);
+    }
+
+    function istApple(nav) {
+        nav = nav || (typeof navigator !== "undefined" ? navigator : {});
+        var ua = nav.userAgent || "";
+        return /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && nav.maxTouchPoints > 1);
+    }
+
+    // iPhone/iPad: die Datei direkt öffnen, dann zeigt iOS "Zum Kalender hinzufügen".
+    // Andere Geräte: Datei speichern; sie öffnet sich mit dem Kalender-Programm.
+    function oeffnen(termine, name) {
+        if (istApple()) {
+            window.location.href = "data:text/calendar;charset=utf-8," + encodeURIComponent(erstelleIcs(termine));
+        } else {
+            herunterladen(termine, name);
+        }
+    }
+
+    var api = {
+        erstelleIcs: erstelleIcs, dateiname: dateiname, herunterladen: herunterladen, oeffnen: oeffnen, falten: falten,
+        googleLink: googleLink, outlookLink: outlookLink, berlinVersatz: berlinVersatz, istApple: istApple
+    };
 
     if (typeof module !== "undefined" && module.exports) {
         module.exports = api;
