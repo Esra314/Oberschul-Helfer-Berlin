@@ -1,0 +1,18 @@
+Copyright (c) 2026 Oberschul-Helfer Berlin
+Alle Rechte vorbehalten. / All rights reserved.
+
+Dieser Quellcode, die Texte und die selbst erstellten Grafiken dieses
+Projekts sind urheberrechtlich geschützt. Ohne vorherige schriftliche
+Erlaubnis dürfen sie weder kopiert, verändert, veröffentlicht noch
+weitergegeben werden. Es wird keine Open-Source-Lizenz erteilt.
+
+This source code, the texts and the original graphics of this project are
+protected by copyright. They may not be copied, modified, published or
+redistributed without prior written permission. No open-source license is
+granted.
+
+Ausgenommen sind Inhalte Dritter, die unter ihren eigenen Lizenzen stehen
+(z. B. Schuldaten des Landes Berlin, Kartendaten von OpenStreetMap,
+Leaflet unter vendor/leaflet, CC0-Fotos). /
+Third-party content keeps its own license (e.g. Berlin school data,
+OpenStreetMap map data, Leaflet in vendor/leaflet, CC0 photos).

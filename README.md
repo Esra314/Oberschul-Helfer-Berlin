@@ -140,3 +140,7 @@ Danach die `sitemap.xml` in der Google Search Console einreichen.
 
 Sicherheit: Jede Seite hat eine Content-Security-Policy (meta-Tag). Es gibt keine Inline-Skripte;
 fremde Server sind nur für die Kartenbilder von OpenStreetMap erlaubt.
+
+## Lizenz
+
+Alle Rechte vorbehalten. Siehe [LICENSE](LICENSE).
