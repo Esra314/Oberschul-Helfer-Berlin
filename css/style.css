@@ -2753,6 +2753,192 @@ button.kalender-gross:disabled {
     }
 }
 
+/* Auswahl des Kalenders */
+.kalender-dialog {
+    width: min(440px, calc(100vw - 24px));
+    max-height: min(86vh, 640px);
+    margin: auto;
+    padding: 0;
+    border: none;
+    border-radius: 18px;
+    background: #fff;
+    color: var(--text);
+    box-shadow: 0 18px 50px rgba(52, 40, 110, 0.28);
+    overflow: auto;
+}
+
+.kalender-dialog::backdrop {
+    background: rgba(40, 32, 80, 0.45);
+}
+
+.kalender-innen {
+    padding: 18px 18px 14px;
+}
+
+.kalender-kopf {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.kalender-kopf h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #4f4596;
+}
+
+button.kalender-zu {
+    min-height: 40px;
+    width: 40px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: #f1eef9;
+    color: #4f4596;
+    font-size: 1.05rem;
+}
+
+button.kalender-zu:hover {
+    background: #e1dbf3;
+}
+
+.kalender-was {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin: 0 0 14px;
+    padding: 10px 12px;
+    background: #f0fbfe;
+    border-inline-start: 4px solid #00a9ff;
+    border-radius: 10px;
+    font-size: 0.92rem;
+}
+
+.kalender-was span {
+    color: var(--text-leise);
+}
+
+.kalender-optionen {
+    display: grid;
+    gap: 8px;
+}
+
+.kalender-option,
+button.kalender-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    min-height: 48px;
+    padding: 10px 14px;
+    border: 1px solid #dcd6f0;
+    border-radius: 12px;
+    background: #fff;
+    color: var(--text);
+    font: inherit;
+    font-weight: 600;
+    text-align: start;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.kalender-option:hover,
+button.kalender-option:hover {
+    background: #f6f3fd;
+    border-color: #ad88c6;
+    color: var(--text);
+}
+
+.kalender-option::before {
+    content: "";
+    flex: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--punkt, #7469b6);
+}
+
+.kal-google { --punkt: #34a853; }
+.kal-outlook { --punkt: #0078d4; }
+.kal-office { --punkt: #0f6cbd; }
+.kal-apple { --punkt: #7469b6; }
+
+.kalender-innen > .kalender-option {
+    margin-bottom: 4px;
+}
+
+.kalender-einzeln {
+    margin: 16px 0 8px;
+    font-size: 0.95rem;
+    color: #4f4596;
+}
+
+.kalender-liste {
+    list-style: none;
+    display: grid;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+}
+
+.kalender-liste li {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 10px 12px;
+    background: #f7f9fc;
+    border-radius: 10px;
+    font-size: 0.88rem;
+}
+
+.kalender-zeit {
+    color: var(--text-leise);
+}
+
+.kalender-mini {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 6px;
+}
+
+.kalender-mini-link {
+    padding: 4px 10px;
+    border: 1px solid #cdf5fd;
+    border-radius: 999px;
+    background: #fff;
+    color: #075985;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.kalender-mini-link:hover {
+    background: #e6f8fe;
+}
+
+.kalender-hinweis {
+    margin: 14px 0 0;
+    font-size: 0.78rem;
+    color: var(--text-leise);
+}
+
+@media (max-width: 600px) {
+    .kalender-dialog {
+        width: 100vw;
+        max-width: 100vw;
+        max-height: 88vh;
+        margin: auto 0 0;
+        border-radius: 20px 20px 0 0;
+    }
+
+    .kalender-innen {
+        padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    }
+}
+
 @media print {
     .kalender-knopf,
     .kalender-box {

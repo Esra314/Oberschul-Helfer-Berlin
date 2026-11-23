@@ -329,7 +329,7 @@
         if (alle && !alle.dataset.bereit) {
             alle.dataset.bereit = "1";
             alle.addEventListener("click", function () {
-                Kalender.herunterladen(TERMINE.filter(function (x) { return !x.wann; }).map(amtlicherTermin), "termine-wechsel-2027");
+                kalenderWahl(TERMINE.filter(function (x) { return !x.wann; }).map(amtlicherTermin), "termine-wechsel-2027", alle);
             });
         }
     }
@@ -368,10 +368,109 @@
         knopf.textContent = "📅 " + t("cal_add");
         knopf.title = t("cal_add_title", { was: was, datum: wann });
         knopf.setAttribute("aria-label", knopf.title);
+        knopf.setAttribute("aria-haspopup", "dialog");
         knopf.addEventListener("click", function () {
-            Kalender.herunterladen(termine, termine[0].datum + "-" + (dateiName || was));
+            kalenderWahl(termine, termine[0].datum + "-" + (dateiName || was), knopf);
         });
         return knopf;
+    }
+
+    function terminWann(x) {
+        var text = x.bis ? datumBereich(x.datum, x.bis) : datum(x.datum);
+        // Uhrzeit links-nach-rechts halten (auch im Arabischen)
+        return x.von ? text + ", \u2066" + x.von + (x.ende ? "–" + x.ende : "") + "\u2069" : text;
+    }
+
+    function webKalenderLinks(termin, klasse, kurz) {
+        return [
+            ["google", "cal_google", "Google", Kalender.googleLink(termin)],
+            ["outlook", "cal_outlook", "Outlook.com", Kalender.outlookLink(termin, "live")],
+            ["office", "cal_office", "Microsoft 365", Kalender.outlookLink(termin, "office")]
+        ].map(function (x) {
+            var a = neuerLink(x[3], kurz ? x[2] : t(x[1]));
+            if (kurz) a.title = t(x[1]);
+            a.className = klasse + " kal-" + x[0];
+            a.rel = "noopener noreferrer";
+            return a;
+        });
+    }
+
+    // Auswahl: in welchen Kalender? (Google, Outlook, Microsoft 365 oder Apple/iPhone/andere als Datei)
+    var kalenderDialog = null;
+
+    function kalenderWahl(termine, dateiName, ausloeser) {
+        if (!kalenderDialog) {
+            kalenderDialog = document.createElement("dialog");
+            kalenderDialog.className = "kalender-dialog";
+            kalenderDialog.addEventListener("click", function (e) {
+                if (e.target === kalenderDialog) kalenderDialog.close();
+            });
+            kalenderDialog.addEventListener("close", function () {
+                if (kalenderDialog.ausloeser) kalenderDialog.ausloeser.focus();
+            });
+            document.body.appendChild(kalenderDialog);
+        }
+        var d = kalenderDialog;
+        d.ausloeser = ausloeser;
+        d.textContent = "";
+        d.setAttribute("aria-labelledby", "kalenderTitel");
+        var innen = element("div", "kalender-innen");
+        var kopf = element("div", "kalender-kopf");
+        var titel = element("h3", "", "📅 " + t("cal_choose"));
+        titel.id = "kalenderTitel";
+        var zu = element("button", "kalender-zu", "✕");
+        zu.type = "button";
+        zu.setAttribute("aria-label", t("cal_close"));
+        zu.addEventListener("click", function () { d.close(); });
+        kopf.appendChild(titel);
+        kopf.appendChild(zu);
+        innen.appendChild(kopf);
+
+        var datei = element("button", "kalender-option kal-apple");
+        datei.type = "button";
+        datei.addEventListener("click", function () {
+            Kalender.oeffnen(termine, dateiName);
+            d.close();
+        });
+
+        if (termine.length === 1) {
+            var x = termine[0];
+            var was = element("p", "kalender-was");
+            was.appendChild(element("strong", "", x.titel));
+            was.appendChild(element("span", "", terminWann(x)));
+            innen.appendChild(was);
+            var optionen = element("div", "kalender-optionen");
+            webKalenderLinks(x, "kalender-option").forEach(function (a) {
+                a.addEventListener("click", function () { d.close(); });
+                optionen.appendChild(a);
+            });
+            datei.textContent = t("cal_apple");
+            optionen.appendChild(datei);
+            innen.appendChild(optionen);
+        } else {
+            datei.textContent = t("cal_apple_all", { anzahl: termine.length });
+            innen.appendChild(datei);
+            innen.appendChild(element("h4", "kalender-einzeln", t("cal_one_by_one")));
+            var liste = element("ul", "kalender-liste");
+            termine.forEach(function (x) {
+                var li = element("li");
+                li.appendChild(element("strong", "", x.titel));
+                li.appendChild(element("span", "kalender-zeit", terminWann(x)));
+                var reihe = element("div", "kalender-mini");
+                webKalenderLinks(x, "kalender-mini-link", true).forEach(function (a) { reihe.appendChild(a); });
+                li.appendChild(reihe);
+                liste.appendChild(li);
+            });
+            innen.appendChild(liste);
+        }
+        innen.appendChild(element("p", "kalender-hinweis", t("cal_privacy")));
+        d.appendChild(innen);
+        if (typeof d.showModal === "function") {
+            d.showModal();
+        } else {
+            d.setAttribute("open", "");
+        }
+        zu.focus();
     }
 
     // ---------- Schulen in der Nähe ----------
@@ -1075,7 +1174,7 @@
     document.getElementById("meineTermineKalender").addEventListener("click", function () {
         var ids = merkliste.ids().filter(function (id) { return schuleNachId[id]; });
         var termine = meineTermine(ids);
-        if (termine.length) Kalender.herunterladen(termine, "termine-meine-schulen");
+        if (termine.length) kalenderWahl(termine, "termine-meine-schulen", document.getElementById("meineTermineKalender"));
     });
 
     document.getElementById("vergleichLeeren").addEventListener("click", function () {
