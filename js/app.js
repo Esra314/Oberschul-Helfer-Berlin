@@ -153,6 +153,7 @@
         zeigeTermine();
         zeigeDatenquelle();
         aktualisiereGymHinweis();
+        zeigeFilter();
         zeigeVergleich();
         if (letzteSuche) {
             zeigeSuche(letzteSuche);
@@ -323,8 +324,157 @@
             was.textContent = t(termin.text);
             li.appendChild(wann);
             li.appendChild(was);
+            if (!termin.wann) {
+                li.appendChild(kalenderKnopf([amtlicherTermin(termin)], t(termin.text), datum(termin.von)));
+            }
             liste.appendChild(li);
         });
+        var alle = document.getElementById("termineKalender");
+        if (alle && !alle.dataset.bereit) {
+            alle.dataset.bereit = "1";
+            alle.addEventListener("click", function () {
+                kalenderWahl(TERMINE.filter(function (x) { return !x.wann; }).map(amtlicherTermin), "termine-wechsel-2027", alle);
+            });
+        }
+    }
+
+    // ---------- Kalender (.ics wird im Browser erstellt, nichts wird gesendet) ----------
+
+    var AMTLICH_URL = "https://www.berlin.de/sen/bildung/schule/bildungswege/uebergang-weiterfuehrende-schule/wechsel-zur-7-klasse/";
+
+    function amtlicherTermin(termin) {
+        return {
+            titel: t(termin.text),
+            datum: termin.von,
+            bis: termin.bis,
+            beschreibung: t("cal_official"),
+            link: AMTLICH_URL
+        };
+    }
+
+    function schulTermin(s, x) {
+        return {
+            titel: t("td_" + x.a) + " – " + s.n,
+            datum: x.d,
+            von: x.v,
+            ende: x.b,
+            ort: s.n + ", " + s.s + ", " + s.z + " Berlin",
+            beschreibung: t("cal_check"),
+            link: x.l
+        };
+    }
+
+    // Kleiner Knopf "In den Kalender" neben einem Termin
+    function kalenderKnopf(termine, was, wann, dateiName) {
+        var knopf = document.createElement("button");
+        knopf.type = "button";
+        knopf.className = "kalender-knopf nur-bildschirm";
+        knopf.textContent = "📅 " + t("cal_add");
+        knopf.title = t("cal_add_title", { was: was, datum: wann });
+        knopf.setAttribute("aria-label", knopf.title);
+        knopf.setAttribute("aria-haspopup", "dialog");
+        knopf.addEventListener("click", function () {
+            kalenderWahl(termine, termine[0].datum + "-" + (dateiName || was), knopf);
+        });
+        return knopf;
+    }
+
+    function terminWann(x) {
+        var text = x.bis ? datumBereich(x.datum, x.bis) : datum(x.datum);
+        // Uhrzeit links-nach-rechts halten (auch im Arabischen)
+        return x.von ? text + ", \u2066" + x.von + (x.ende ? "–" + x.ende : "") + "\u2069" : text;
+    }
+
+    function webKalenderLinks(termin, klasse, kurz) {
+        return [
+            ["google", "cal_google", "Google", Kalender.googleLink(termin)],
+            ["outlook", "cal_outlook", "Outlook.com", Kalender.outlookLink(termin, "live")],
+            ["office", "cal_office", "Microsoft 365", Kalender.outlookLink(termin, "office")]
+        ].map(function (x) {
+            var a = neuerLink(x[3], kurz ? x[2] : t(x[1]));
+            if (kurz) a.title = t(x[1]);
+            a.className = klasse + " kal-" + x[0];
+            a.rel = "noopener noreferrer";
+            return a;
+        });
+    }
+
+    // Auswahl: in welchen Kalender? (Google, Outlook, Microsoft 365 oder Apple/iPhone/andere als Datei)
+    var kalenderDialog = null;
+
+    function kalenderWahl(termine, dateiName, ausloeser) {
+        if (!kalenderDialog) {
+            kalenderDialog = document.createElement("dialog");
+            kalenderDialog.className = "kalender-dialog";
+            kalenderDialog.addEventListener("click", function (e) {
+                if (e.target === kalenderDialog) kalenderDialog.close();
+            });
+            kalenderDialog.addEventListener("close", function () {
+                if (kalenderDialog.ausloeser) kalenderDialog.ausloeser.focus();
+            });
+            document.body.appendChild(kalenderDialog);
+        }
+        var d = kalenderDialog;
+        d.ausloeser = ausloeser;
+        d.textContent = "";
+        d.setAttribute("aria-labelledby", "kalenderTitel");
+        var innen = element("div", "kalender-innen");
+        var kopf = element("div", "kalender-kopf");
+        var titel = element("h3", "", "📅 " + t("cal_choose"));
+        titel.id = "kalenderTitel";
+        var zu = element("button", "kalender-zu", "✕");
+        zu.type = "button";
+        zu.setAttribute("aria-label", t("cal_close"));
+        zu.addEventListener("click", function () { d.close(); });
+        kopf.appendChild(titel);
+        kopf.appendChild(zu);
+        innen.appendChild(kopf);
+
+        var datei = element("button", "kalender-option kal-apple");
+        datei.type = "button";
+        datei.addEventListener("click", function () {
+            Kalender.oeffnen(termine, dateiName);
+            d.close();
+        });
+
+        if (termine.length === 1) {
+            var x = termine[0];
+            var was = element("p", "kalender-was");
+            was.appendChild(element("strong", "", x.titel));
+            was.appendChild(element("span", "", terminWann(x)));
+            innen.appendChild(was);
+            var optionen = element("div", "kalender-optionen");
+            webKalenderLinks(x, "kalender-option").forEach(function (a) {
+                a.addEventListener("click", function () { d.close(); });
+                optionen.appendChild(a);
+            });
+            datei.textContent = t("cal_apple");
+            optionen.appendChild(datei);
+            innen.appendChild(optionen);
+        } else {
+            datei.textContent = t("cal_apple_all", { anzahl: termine.length });
+            innen.appendChild(datei);
+            innen.appendChild(element("h4", "kalender-einzeln", t("cal_one_by_one")));
+            var liste = element("ul", "kalender-liste");
+            termine.forEach(function (x) {
+                var li = element("li");
+                li.appendChild(element("strong", "", x.titel));
+                li.appendChild(element("span", "kalender-zeit", terminWann(x)));
+                var reihe = element("div", "kalender-mini");
+                webKalenderLinks(x, "kalender-mini-link", true).forEach(function (a) { reihe.appendChild(a); });
+                li.appendChild(reihe);
+                liste.appendChild(li);
+            });
+            innen.appendChild(liste);
+        }
+        innen.appendChild(element("p", "kalender-hinweis", t("cal_privacy")));
+        d.appendChild(innen);
+        if (typeof d.showModal === "function") {
+            d.showModal();
+        } else {
+            d.setAttribute("open", "");
+        }
+        zu.focus();
     }
 
     // ---------- Schulen in der Nähe ----------
@@ -370,8 +520,14 @@
             privat: document.getElementById("privat").checked,
             radiusKm: Number(document.getElementById("radius").value)
         });
+        if (r.ok && filterAuswahl.length > 0) {
+            r.schulen = r.schulen.filter(function (s) {
+                return window.SchulFilter.passt(schulinfos[s.id], filterAuswahl);
+            });
+        }
         letzteSuche = r;
         zeigeSuche(r);
+        zeigeFilter();
         if (scrollen && r.ok) {
             document.getElementById("sucheErgebnis").scrollIntoView({ behavior: "smooth", block: "start" });
         }
@@ -399,7 +555,7 @@
         var km = document.getElementById("radius").value;
         document.getElementById("trefferAnzahl").textContent = r.schulen.length > 0
             ? t("near_count", { anzahl: r.schulen.length, km: km })
-            : t("near_none");
+            : t(filterAuswahl.length > 0 ? "flt_none" : "near_none");
 
         var liste = document.getElementById("schulListe");
         liste.textContent = "";
@@ -477,6 +633,109 @@
             zeichneKarte(r);
         }
     }
+
+    // ---------- Filter: Schwerpunkt, Fremdsprachen, Besonderes ----------
+
+    var filterAuswahl = [];
+
+    function filterName(o) {
+        return o.name || t(o.text);
+    }
+
+    function schalteFilter(schluessel) {
+        var i = filterAuswahl.indexOf(schluessel);
+        if (i === -1) filterAuswahl.push(schluessel); else filterAuswahl.splice(i, 1);
+        if (letzteSuche && letzteSuche.ok) sucheSchulen(false); else zeigeFilter();
+    }
+
+    function zeigeFilter() {
+        var gruppen = document.getElementById("filterGruppen");
+        gruppen.textContent = "";
+        window.SchulFilter.GRUPPEN.forEach(function (g) {
+            var box = document.createElement("div");
+            box.className = "sfilter-gruppe";
+            box.setAttribute("role", "group");
+            var titel = document.createElement("p");
+            titel.className = "sfilter-titel";
+            titel.id = "filterTitel-" + g.id;
+            titel.textContent = t(g.text);
+            box.setAttribute("aria-labelledby", titel.id);
+            box.appendChild(titel);
+            g.optionen.forEach(function (o) {
+                var schluessel = g.id + ":" + o.id;
+                var chip = document.createElement("button");
+                chip.type = "button";
+                chip.className = "sfilter-chip";
+                if (o.name) chip.lang = "de";
+                chip.textContent = filterName(o);
+                chip.setAttribute("aria-pressed", filterAuswahl.indexOf(schluessel) !== -1 ? "true" : "false");
+                chip.addEventListener("click", function () {
+                    schalteFilter(schluessel);
+                    var neu = document.querySelector('#filterGruppen [data-f="' + schluessel + '"]');
+                    if (neu) neu.focus();
+                });
+                chip.dataset.f = schluessel;
+                box.appendChild(chip);
+            });
+            gruppen.appendChild(box);
+        });
+
+        var zahl = document.getElementById("filterZahl");
+        zahl.textContent = String(filterAuswahl.length);
+        zahl.classList.toggle("verborgen", filterAuswahl.length === 0);
+
+        var aktiv = document.getElementById("filterAktiv");
+        aktiv.textContent = "";
+        aktiv.classList.toggle("verborgen", filterAuswahl.length === 0);
+        if (filterAuswahl.length > 0) {
+            var wort = document.createElement("span");
+            wort.textContent = t("flt_active");
+            aktiv.appendChild(wort);
+            filterAuswahl.forEach(function (schluessel) {
+                var o = window.SchulFilter.OPTION[schluessel];
+                if (!o) return;
+                var x = document.createElement("button");
+                x.type = "button";
+                x.className = "sfilter-weg";
+                if (o.name) x.lang = "de";
+                x.textContent = filterName(o);
+                x.setAttribute("aria-label", t("flt_remove", { name: filterName(o) }));
+                x.addEventListener("click", function () {
+                    schalteFilter(schluessel);
+                    var knopf = document.getElementById("filterKnopf");
+                    if (!document.querySelector("#filterAktiv .sfilter-weg")) knopf.focus();
+                });
+                aktiv.appendChild(x);
+            });
+        }
+
+        document.getElementById("filterFertig").textContent = letzteSuche && letzteSuche.ok && letzteSuche.schulen.length > 0
+            ? t("flt_show", { anzahl: letzteSuche.schulen.length })
+            : t("flt_done");
+    }
+
+    function oeffneFilter(auf) {
+        document.getElementById("filterFeld").hidden = !auf;
+        var knopf = document.getElementById("filterKnopf");
+        knopf.setAttribute("aria-expanded", auf ? "true" : "false");
+        knopf.classList.toggle("offen", auf);
+    }
+
+    document.getElementById("filterKnopf").addEventListener("click", function () {
+        oeffneFilter(document.getElementById("filterFeld").hidden);
+    });
+    document.getElementById("filterLoeschen").addEventListener("click", function () {
+        filterAuswahl = [];
+        if (letzteSuche && letzteSuche.ok) sucheSchulen(false); else zeigeFilter();
+    });
+    document.getElementById("filterFertig").addEventListener("click", function () {
+        oeffneFilter(false);
+        if (letzteSuche && letzteSuche.ok) {
+            document.getElementById("sucheErgebnis").scrollIntoView({ behavior: "smooth", block: "start" });
+        } else {
+            document.getElementById("filterKnopf").focus();
+        }
+    });
 
     // ---------- Details, Merkliste und Vergleich ----------
 
@@ -734,6 +993,8 @@
                 var li = element("li", i >= 2 ? "verborgen" : "");
                 li.appendChild(neuerLink(x.l, terminText(x)));
                 if (x.q === "w") li.appendChild(element("small", "termin-quelle", " · " + t("src_web_short")));
+                li.appendChild(document.createTextNode(" "));
+                li.appendChild(kalenderKnopf([schulTermin(s, x)], t("td_" + x.a) + " " + s.n, datum(x.d), s.n));
                 terminBox.appendChild(li);
             });
             if (termine.length > 2) {
@@ -798,6 +1059,24 @@
         return details;
     }
 
+    function meineTermine(ids) {
+        var liste = [];
+        ids.forEach(function (id) {
+            var s = schuleNachId[id];
+            kommendeTermine(s).forEach(function (x) { liste.push(schulTermin(s, x)); });
+        });
+        return liste.sort(function (a, b) { return a.datum < b.datum ? -1 : a.datum > b.datum ? 1 : 0; });
+    }
+
+    function zeigeMeineTermine(ids) {
+        var knopf = document.getElementById("meineTermineKalender");
+        var info = document.getElementById("meineTermineInfo");
+        if (!knopf || !info) return;
+        var anzahl = meineTermine(ids).length;
+        knopf.disabled = anzahl === 0;
+        info.textContent = anzahl ? t("cal_mine_count", { anzahl: anzahl }) + " · " + t("cal_note") : t("cal_mine_none");
+    }
+
     function zeigeVergleich() {
         var ids = merkliste.ids().filter(function (id) { return schuleNachId[id]; });
         var zaehler = document.getElementById("merkZaehler");
@@ -809,6 +1088,7 @@
         document.getElementById("vergleichBereich").classList.toggle("verborgen", ids.length === 0);
         var tabelle = document.getElementById("vergleichTabelle");
         tabelle.textContent = "";
+        zeigeMeineTermine(ids);
         if (ids.length === 0) return;
 
         var schulen = ids.map(function (id) { return schuleNachId[id]; });
@@ -901,6 +1181,12 @@
         document.getElementById("vergleichLegende").textContent = "ⓘ = " + t("sv_mark") + ". "
             + t("sv_dates_source", { datum: infoStand ? datum(infoStand) : "–" });
     }
+
+    document.getElementById("meineTermineKalender").addEventListener("click", function () {
+        var ids = merkliste.ids().filter(function (id) { return schuleNachId[id]; });
+        var termine = meineTermine(ids);
+        if (termine.length) kalenderWahl(termine, "termine-meine-schulen", document.getElementById("meineTermineKalender"));
+    });
 
     document.getElementById("vergleichLeeren").addEventListener("click", function () {
         merkliste.leeren();

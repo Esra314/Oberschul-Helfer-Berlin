@@ -380,9 +380,17 @@ a {
     max-width: 860px;
     margin: 16px auto 0;
     display: flex;
-    gap: 20px;
+    flex-wrap: wrap;
+    gap: 8px 20px;
     justify-content: center;
     font-size: 0.875rem;
+}
+
+.copyright {
+    flex-basis: 100%;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-leise);
 }
 
 .verborgen {
@@ -2667,6 +2675,459 @@ html[data-ansicht]:not([data-ansicht="rechner"]) .hero-titel {
 
 @media print {
     .hilfe {
+        display: none !important;
+    }
+}
+
+/* ---------- Kalender: Termine als .ics-Datei speichern ---------- */
+
+button.kalender-knopf {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    min-height: 32px;
+    padding: 3px 12px;
+    border: 1px solid var(--v, var(--blau));
+    border-radius: 999px;
+    background: #fff;
+    color: var(--v-dunkel, var(--blau-dunkel));
+    font: inherit;
+    font-size: 0.8rem;
+    font-weight: 600;
+    line-height: 1.4;
+    white-space: nowrap;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+button.kalender-knopf:hover {
+    background: var(--v-hell, var(--blau-hell));
+}
+
+.termin-liste .kalender-knopf {
+    grid-column: 2;
+    justify-self: start;
+}
+
+.sv-termine .kalender-knopf {
+    margin-block: 2px;
+}
+
+.kalender-box {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 14px;
+    margin: 12px 0 14px;
+}
+
+.kalender-box .klein {
+    margin: 0;
+}
+
+button.kalender-gross {
+    background: var(--v, var(--blau));
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    padding: 9px 18px;
+    font-weight: 600;
+}
+
+button.kalender-gross::before {
+    content: "📅 ";
+}
+
+button.kalender-gross:hover {
+    background: var(--v-dunkel, var(--blau-dunkel));
+}
+
+button.kalender-gross:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+    .termin-liste .kalender-knopf {
+        grid-column: 1;
+    }
+}
+
+/* Auswahl des Kalenders */
+.kalender-dialog {
+    width: min(440px, calc(100vw - 24px));
+    max-height: min(86vh, 640px);
+    margin: auto;
+    padding: 0;
+    border: none;
+    border-radius: 18px;
+    background: #fff;
+    color: var(--text);
+    box-shadow: 0 18px 50px rgba(52, 40, 110, 0.28);
+    overflow: auto;
+}
+
+.kalender-dialog::backdrop {
+    background: rgba(40, 32, 80, 0.45);
+}
+
+.kalender-innen {
+    padding: 18px 18px 14px;
+}
+
+.kalender-kopf {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.kalender-kopf h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #4f4596;
+}
+
+button.kalender-zu {
+    min-height: 40px;
+    width: 40px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: #f1eef9;
+    color: #4f4596;
+    font-size: 1.05rem;
+}
+
+button.kalender-zu:hover {
+    background: #e1dbf3;
+}
+
+.kalender-was {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin: 0 0 14px;
+    padding: 10px 12px;
+    background: #f0fbfe;
+    border-inline-start: 4px solid #00a9ff;
+    border-radius: 10px;
+    font-size: 0.92rem;
+}
+
+.kalender-was span {
+    color: var(--text-leise);
+}
+
+.kalender-optionen {
+    display: grid;
+    gap: 8px;
+}
+
+.kalender-option,
+button.kalender-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    min-height: 48px;
+    padding: 10px 14px;
+    border: 1px solid #dcd6f0;
+    border-radius: 12px;
+    background: #fff;
+    color: var(--text);
+    font: inherit;
+    font-weight: 600;
+    text-align: start;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.kalender-option:hover,
+button.kalender-option:hover {
+    background: #f6f3fd;
+    border-color: #ad88c6;
+    color: var(--text);
+}
+
+.kalender-option::before {
+    content: "";
+    flex: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--punkt, #7469b6);
+}
+
+.kal-google { --punkt: #34a853; }
+.kal-outlook { --punkt: #0078d4; }
+.kal-office { --punkt: #0f6cbd; }
+.kal-apple { --punkt: #7469b6; }
+
+.kalender-innen > .kalender-option {
+    margin-bottom: 4px;
+}
+
+.kalender-einzeln {
+    margin: 16px 0 8px;
+    font-size: 0.95rem;
+    color: #4f4596;
+}
+
+.kalender-liste {
+    list-style: none;
+    display: grid;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+}
+
+.kalender-liste li {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 10px 12px;
+    background: #f7f9fc;
+    border-radius: 10px;
+    font-size: 0.88rem;
+}
+
+.kalender-zeit {
+    color: var(--text-leise);
+}
+
+.kalender-mini {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 6px;
+}
+
+.kalender-mini-link {
+    padding: 4px 10px;
+    border: 1px solid #cdf5fd;
+    border-radius: 999px;
+    background: #fff;
+    color: #075985;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.kalender-mini-link:hover {
+    background: #e6f8fe;
+}
+
+.kalender-hinweis {
+    margin: 14px 0 0;
+    font-size: 0.78rem;
+    color: var(--text-leise);
+}
+
+@media (max-width: 600px) {
+    .kalender-dialog {
+        width: 100vw;
+        max-width: 100vw;
+        max-height: 88vh;
+        margin: auto 0 0;
+        border-radius: 20px 20px 0 0;
+    }
+
+    .kalender-innen {
+        padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    }
+}
+
+@media print {
+    .kalender-knopf,
+    .kalender-box {
+        display: none !important;
+    }
+}
+
+/* ---------- Filter in der Schulsuche (Schwerpunkt, Sprachen, Besonderes) ---------- */
+
+.sfilter {
+    margin-top: 14px;
+}
+
+.sfilter-knopf {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+    min-height: 48px;
+    padding: 10px 16px;
+    border: 1.5px solid #89CFF3;
+    border-radius: 14px;
+    background: linear-gradient(90deg, #e6f8fe, #f3eefb);
+    color: var(--blau-dunkel);
+    font: inherit;
+    font-weight: 700;
+    text-align: start;
+    cursor: pointer;
+}
+
+.sfilter-knopf:hover {
+    border-color: var(--blau);
+}
+
+.sfilter-knopf.offen {
+    border-radius: 14px 14px 0 0;
+}
+
+.sfilter-knopf.offen .sfilter-pfeil {
+    transform: rotate(180deg);
+}
+
+.sfilter-zahl {
+    display: inline-block;
+    min-width: 1.6em;
+    margin-inline-start: 4px;
+    padding: 0 8px;
+    border-radius: 999px;
+    background: #7469B6;
+    color: #fff;
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+.sfilter-feld {
+    padding: 4px 16px 14px;
+    border: 1.5px solid #89CFF3;
+    border-top: 0;
+    border-radius: 0 0 14px 14px;
+    background: #fbfeff;
+}
+
+.sfilter-gruppe {
+    margin: 12px 0 4px;
+}
+
+.sfilter-titel {
+    margin: 0 0 8px;
+    color: var(--text-leise);
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.sfilter-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 36px;
+    margin-block: 0 8px;
+    margin-inline: 0 6px;
+    padding: 6px 13px;
+    border: 1.5px solid #89CFF3;
+    border-radius: 999px;
+    background: #fff;
+    color: var(--blau-dunkel);
+    font: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.sfilter-chip:hover {
+    border-color: var(--blau);
+    background: var(--blau-hell);
+}
+
+.sfilter-chip[aria-pressed="true"] {
+    border-color: var(--blau);
+    background: var(--blau);
+    color: #fff;
+}
+
+.sfilter-chip[aria-pressed="true"]::before {
+    content: "✓";
+}
+
+.sfilter-chip:focus-visible,
+.sfilter-knopf:focus-visible,
+.sfilter-weg:focus-visible,
+.sfilter-link:focus-visible {
+    outline: 3px solid var(--blau);
+    outline-offset: 2px;
+}
+
+.sfilter-hinweis {
+    margin: 6px 0 0;
+    color: var(--text-leise);
+    font-size: 0.85rem;
+}
+
+.sfilter-fuss {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.sfilter-link {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--blau);
+    font: inherit;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.sfilter-fertig {
+    min-height: 42px;
+    padding: 8px 18px;
+    border: 0;
+    border-radius: 10px;
+    background: var(--blau);
+    color: #fff;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.sfilter-fertig:hover {
+    background: var(--blau-dunkel);
+}
+
+.sfilter-aktiv {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+    color: var(--text-leise);
+    font-size: 0.9rem;
+}
+
+.sfilter-weg {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 32px;
+    padding: 4px 11px;
+    border: 0;
+    border-radius: 999px;
+    background: var(--blau-hell);
+    color: var(--blau-dunkel);
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.sfilter-weg::after {
+    content: "✕";
+    font-size: 0.75rem;
+}
+
+@media print {
+    .sfilter-knopf,
+    .sfilter-feld {
         display: none !important;
     }
 }

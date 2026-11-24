@@ -9,5 +9,5 @@
     "texte": "node scripts/texte-einsetzen.js",
     "schulinfos": "node scripts/schulinfos-erstellen.mjs"
   },
-  "license": "UNLICENSED"
+  "license": "SEE LICENSE IN LICENSE"
 }

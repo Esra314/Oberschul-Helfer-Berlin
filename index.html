@@ -293,6 +293,22 @@
             </fieldset>
             <p id="gym-hinweis" class="klein hinweis-orange verborgen"></p>
 
+            <div class="sfilter">
+                <button type="button" id="filterKnopf" class="sfilter-knopf" aria-expanded="false" aria-controls="filterFeld">
+                    <span><span aria-hidden="true">🎛️</span> <span data-i18n="flt_button">Filter: Schwerpunkt, Sprachen …</span> <span id="filterZahl" class="sfilter-zahl verborgen"></span></span>
+                    <span class="sfilter-pfeil" aria-hidden="true">▼</span>
+                </button>
+                <div id="filterFeld" class="sfilter-feld" hidden>
+                    <div id="filterGruppen"></div>
+                    <p class="sfilter-hinweis" data-i18n="flt_hint">Mehrere in einer Gruppe: Eins davon reicht. Angaben aus dem Berliner Schulverzeichnis, bitte auf der Webseite der Schule prüfen.</p>
+                    <div class="sfilter-fuss">
+                        <button type="button" id="filterLoeschen" class="sfilter-link" data-i18n="flt_clear">Alle löschen</button>
+                        <button type="button" id="filterFertig" class="sfilter-fertig">Fertig</button>
+                    </div>
+                </div>
+                <div id="filterAktiv" class="sfilter-aktiv verborgen"></div>
+            </div>
+
             <div class="knoepfe">
                 <button type="submit" data-i18n="btn_search">Schulen suchen</button>
             </div>
@@ -345,6 +361,10 @@
                 <table id="vergleichTabelle" class="vergleich-tabelle"></table>
             </div>
             <p id="vergleichLegende" class="klein"></p>
+            <div class="kalender-box nur-bildschirm">
+                <button type="button" id="meineTermineKalender" class="kalender-gross" data-i18n="cal_mine">Termine meiner Schulen in den Kalender</button>
+                <p id="meineTermineInfo" class="klein"></p>
+            </div>
             <div class="knoepfe nur-bildschirm">
                 <button type="button" id="vergleichLeeren" class="zweitrangig" data-i18n="compare_clear">Alle löschen</button>
             </div>
@@ -388,6 +408,10 @@
             <p data-i18n="dont_miss_text">Fast alle Oberschulen laden zum Tag der offenen Tür oder zu Infoabenden ein, meist zwischen November und Januar. Dort lernen Sie die Schule kennen und können Fragen stellen. Die Termine stehen auf der Webseite der Schule. Sie können die Schule auch anrufen.</p>
         </div>
         <ul id="terminListe" class="termin-liste"></ul>
+        <div class="kalender-box nur-bildschirm">
+            <button type="button" id="termineKalender" class="kalender-gross" data-i18n="cal_all">Alle Termine in den Kalender</button>
+            <p class="klein" data-i18n="cal_note">Sie wählen danach Ihren Kalender aus (Google, Outlook, Apple / iPhone …).</p>
+        </div>
         <p class="klein" data-i18n="dates_note">Bitte prüfen Sie die Termine auf der offiziellen Seite. Sie können sich ändern.</p>
         <a class="weiter nur-bildschirm" href="#fragen" data-i18n="next_info">Weiter: Infos zu den Schularten</a>
     </section>
@@ -450,6 +474,7 @@
 <footer class="seitenfuss">
     <a href="impressum.html" data-i18n="footer_imprint">Impressum</a>
     <a href="datenschutz.html" data-i18n="footer_privacy">Datenschutz</a>
+    <small class="copyright">© 2026 Oberschul-Helfer Berlin</small>
 </footer>
 
 <script src="vendor/leaflet/leaflet.js" defer></script>
@@ -457,7 +482,9 @@
 <script src="data/schulinfos.js"></script>
 <script src="js/rechner.js"></script>
 <script src="js/umkreis.js"></script>
+<script src="js/filter.js"></script>
 <script src="js/merkliste.js"></script>
+<script src="js/kalender.js"></script>
 <script src="js/i18n.js"></script>
 <script src="js/app.js"></script>
 <script src="js/assistent-daten.js"></script>
