@@ -5,11 +5,66 @@
     <loc>https://oberschulhelferberlin.de/</loc>
     <lastmod>2026-11-25</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://oberschulhelferberlin.de/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://oberschulhelferberlin.de/?lang=en"/>
-    <xhtml:link rel="alternate" hreflang="tr" href="https://oberschulhelferberlin.de/?lang=tr"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://oberschulhelferberlin.de/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="uk" href="https://oberschulhelferberlin.de/?lang=uk"/>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://oberschulhelferberlin.de/?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oberschulhelferberlin.de/en/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://oberschulhelferberlin.de/tr/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://oberschulhelferberlin.de/ar/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://oberschulhelferberlin.de/uk/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://oberschulhelferberlin.de/ru/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://oberschulhelferberlin.de/"/>
+  </url>
+  <url>
+    <loc>https://oberschulhelferberlin.de/en/</loc>
+    <lastmod>2026-11-25</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://oberschulhelferberlin.de/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oberschulhelferberlin.de/en/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://oberschulhelferberlin.de/tr/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://oberschulhelferberlin.de/ar/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://oberschulhelferberlin.de/uk/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://oberschulhelferberlin.de/ru/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://oberschulhelferberlin.de/"/>
+  </url>
+  <url>
+    <loc>https://oberschulhelferberlin.de/tr/</loc>
+    <lastmod>2026-11-25</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://oberschulhelferberlin.de/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oberschulhelferberlin.de/en/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://oberschulhelferberlin.de/tr/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://oberschulhelferberlin.de/ar/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://oberschulhelferberlin.de/uk/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://oberschulhelferberlin.de/ru/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://oberschulhelferberlin.de/"/>
+  </url>
+  <url>
+    <loc>https://oberschulhelferberlin.de/ar/</loc>
+    <lastmod>2026-11-25</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://oberschulhelferberlin.de/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oberschulhelferberlin.de/en/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://oberschulhelferberlin.de/tr/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://oberschulhelferberlin.de/ar/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://oberschulhelferberlin.de/uk/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://oberschulhelferberlin.de/ru/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://oberschulhelferberlin.de/"/>
+  </url>
+  <url>
+    <loc>https://oberschulhelferberlin.de/uk/</loc>
+    <lastmod>2026-11-25</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://oberschulhelferberlin.de/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oberschulhelferberlin.de/en/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://oberschulhelferberlin.de/tr/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://oberschulhelferberlin.de/ar/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://oberschulhelferberlin.de/uk/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://oberschulhelferberlin.de/ru/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://oberschulhelferberlin.de/"/>
+  </url>
+  <url>
+    <loc>https://oberschulhelferberlin.de/ru/</loc>
+    <lastmod>2026-11-25</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://oberschulhelferberlin.de/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oberschulhelferberlin.de/en/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://oberschulhelferberlin.de/tr/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://oberschulhelferberlin.de/ar/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://oberschulhelferberlin.de/uk/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://oberschulhelferberlin.de/ru/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://oberschulhelferberlin.de/"/>
   </url>
 </urlset>

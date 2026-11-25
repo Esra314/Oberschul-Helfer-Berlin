@@ -54,7 +54,7 @@ tests/              Tests mit node:test
 
 ## Lokal starten
 
-`index.html` im Browser öffnen. Eine Sprache direkt öffnen: `index.html?lang=tr` (de, en, tr, ar, uk, ru).
+`index.html` im Browser öffnen. Jede Sprache hat eine eigene Seite: `/` (Deutsch), `/en/`, `/tr/`, `/ar/`, `/uk/`, `/ru/`. Alte Links mit `?lang=tr` leiten dorthin weiter.
 
 ## Auf allen Geräten
 
@@ -71,8 +71,11 @@ Updates sind daher sofort sichtbar. `VERSION` in `sw.js` nur erhöhen, wenn sich
 
 ## Texte ändern
 
-Alle Texte stehen in `js/i18n.js`. Die deutschen Texte stehen zusätzlich direkt in `index.html`
-(für Suchmaschinen und Link-Vorschauen). Nach einer Textänderung:
+Alle Texte stehen in `js/i18n.js`. Sie stehen zusätzlich fertig in den HTML-Seiten
+(`index.html` Deutsch, `en/index.html`, `tr/index.html`, `ar/index.html`, `uk/index.html`, `ru/index.html`),
+damit Google jede Sprache einzeln findet (eigener Titel, eigene Beschreibung, canonical und hreflang).
+Die Sprachseiten werden aus `index.html` erzeugt – nur `index.html` bearbeiten, nie die Kopien.
+Das Skript schreibt auch die `sitemap.xml`. Nach einer Änderung an `index.html` oder den Texten:
 
 ```bash
 npm run texte
@@ -152,7 +155,7 @@ Name und Anschrift in `impressum.html` und `datenschutz.html` sind eingetragen (
 
 Eigene Domain: `https://oberschulhelferberlin.de/` (Datei `CNAME`; in Settings → Pages „Enforce HTTPS“ an).
 Die alte Adresse `esra314.github.io/Oberschul-Helfer-Berlin/` leitet GitHub automatisch dorthin weiter.
-Die Adresse steht in `index.html` (hreflang, og:url, og:image), `sitemap.xml`, `robots.txt` und in den
+Die Adresse kommt aus `CNAME` (`npm run texte` setzt sie in alle Sprachseiten und die `sitemap.xml`), außerdem steht sie in `index.html` (og:image), `robots.txt` und in den
 User-Agents der Skripte unter `scripts/`. Bei einem Domainwechsel dort anpassen.
 Danach die `sitemap.xml` in der Google Search Console einreichen.
 

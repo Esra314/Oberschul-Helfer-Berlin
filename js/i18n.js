@@ -296,7 +296,10 @@
             faq_q6: "Im Zeugnis fehlt eine Note oder steht etwas anderes?",
             faq_a6: "Zum Beispiel eine Zwischennote wie „2-3“, ein anderes Fach oder ein Zeugnis aus einem anderen Bundesland oder Land. Dann gelten Sonderregeln. Die Grundschule berät Sie und berechnet die Förderprognose. Diese Seite kann solche Fälle nicht genau berechnen.",
             footer_privacy: "Datenschutz",
-            footer_contact: "Kontakt"
+            footer_contact: "Kontakt",
+            // Suchmaschinen: Titel und Beschreibung der Sprachseite
+            seo_title: "Oberschul-Helfer Berlin – Von der Grundschule zur Oberschule | Notenrechner Klasse 5/6",
+            seo_desc: "Oberschul-Helfer Berlin: Von der Grundschule zur Oberschule. Kostenloser Notenrechner – Durchschnitt aus Klasse 5 und 6 berechnen, Notensumme und Gymnasialeignung (Förderprognose) prüfen und passende Oberschulen in der Nähe finden: Gymnasium, Integrierte Sekundarschule (ISS) und Gemeinschaftsschule. Mehrsprachig: Deutsch, Englisch, Türkisch, Arabisch, Ukrainisch und Russisch."
         },
 
         en: {
@@ -576,7 +579,10 @@
             faq_q6: "A grade is missing in the report, or it shows something else?",
             faq_a6: "For example an in-between grade like “2-3”, a different subject, or a report from another federal state or country. Special rules apply then. The primary school advises you and calculates the Förderprognose. This page cannot calculate such cases exactly.",
             footer_privacy: "Privacy policy (Datenschutz)",
-            footer_contact: "Contact (Kontakt)"
+            footer_contact: "Contact (Kontakt)",
+            // Suchmaschinen: Titel und Beschreibung der Sprachseite
+            seo_title: "Oberschul-Helfer Berlin – From primary to secondary school | Grade calculator for grades 5/6",
+            seo_desc: "Free grade calculator for Berlin: calculate the average from grades 5 and 6, check the grade total and Gymnasium eligibility (Förderprognose) and find secondary schools nearby: Gymnasium, Integrierte Sekundarschule (ISS) and Gemeinschaftsschule. In English, German, Turkish, Arabic, Ukrainian and Russian."
         },
 
         tr: {
@@ -856,7 +862,10 @@
             faq_q6: "Karnede bir not eksik ya da farklı bir şey mi yazıyor?",
             faq_a6: "Örneğin „2-3“ gibi ara bir not, farklı bir ders ya da başka bir eyaletten veya ülkeden gelen bir karne. Bu durumda özel kurallar geçerlidir. İlkokul size danışmanlık yapar ve Förderprognose'u hesaplar. Bu sayfa bu tür durumları tam olarak hesaplayamaz.",
             footer_privacy: "Gizlilik (Datenschutz)",
-            footer_contact: "İletişim (Kontakt)"
+            footer_contact: "İletişim (Kontakt)",
+            // Suchmaschinen: Titel und Beschreibung der Sprachseite
+            seo_title: "Oberschul-Helfer Berlin – İlkokuldan ortaokula | 5. ve 6. sınıf not ortalaması hesaplama",
+            seo_desc: "Berlin için ücretsiz not hesaplayıcı: 5. ve 6. sınıf karne notlarından ortalamayı hesaplayın, not toplamını ve Gymnasium uygunluğunu (Förderprognose) kontrol edin, yakındaki okulları bulun: Gymnasium, Integrierte Sekundarschule (ISS) ve Gemeinschaftsschule. Türkçe, Almanca, İngilizce, Arapça, Ukraynaca ve Rusça."
         },
 
         ar: {
@@ -1136,7 +1145,10 @@
             faq_q6: "هل تنقص درجة في الشهادة أو يوجد فيها شيء مختلف؟",
             faq_a6: "مثلاً درجة بينية مثل «2-3»، أو مادة مختلفة، أو شهادة من ولاية أو دولة أخرى. عندها تُطبَّق قواعد خاصة. المدرسة الابتدائية تقدم لكم الاستشارة وتحسب الـ Förderprognose. لا يمكن لهذه الصفحة حساب هذه الحالات بدقة.",
             footer_privacy: "حماية البيانات (Datenschutz)",
-            footer_contact: "تواصل معنا (Kontakt)"
+            footer_contact: "تواصل معنا (Kontakt)",
+            // Suchmaschinen: Titel und Beschreibung der Sprachseite
+            seo_title: "Oberschul-Helfer Berlin – من المدرسة الابتدائية إلى الثانوية | حساب معدل الصف الخامس والسادس",
+            seo_desc: "حاسبة درجات مجانية لبرلين: احسب المعدل من شهادتي الصف الخامس والسادس، وتحقق من مجموع الدرجات ومن الأهلية للـ Gymnasium (Förderprognose)، وابحث عن مدارس قريبة: Gymnasium وIntegrierte Sekundarschule (ISS) وGemeinschaftsschule. بالعربية والألمانية والإنجليزية والتركية والأوكرانية والروسية."
         },
 
         uk: {
@@ -1416,7 +1428,10 @@
             faq_q6: "У табелі бракує оцінки або написано щось інше?",
             faq_a6: "Наприклад, проміжна оцінка «2-3», інший предмет або табель з іншої федеральної землі чи країни. Тоді діють особливі правила. Початкова школа проконсультує вас і розрахує Förderprognose. Ця сторінка не може точно розрахувати такі випадки.",
             footer_privacy: "Захист даних (Datenschutz)",
-            footer_contact: "Контакт (Kontakt)"
+            footer_contact: "Контакт (Kontakt)",
+            // Suchmaschinen: Titel und Beschreibung der Sprachseite
+            seo_title: "Oberschul-Helfer Berlin – з початкової до середньої школи | Калькулятор оцінок 5–6 клас",
+            seo_desc: "Безкоштовний калькулятор оцінок для Берліна: обчисліть середній бал за 5 і 6 клас, перевірте суму оцінок і придатність до Gymnasium (Förderprognose) та знайдіть школи поруч: Gymnasium, Integrierte Sekundarschule (ISS) і Gemeinschaftsschule. Українською, німецькою, англійською, турецькою, арабською та російською."
         },
 
         ru: {
@@ -1696,7 +1711,10 @@
             faq_q6: "В табеле нет оценки или написано что-то другое?",
             faq_a6: "Например, промежуточная оценка «2-3», другой предмет или табель из другой федеральной земли или страны. Тогда действуют особые правила. Начальная школа проконсультирует вас и рассчитает Förderprognose. Эта страница не может точно рассчитать такие случаи.",
             footer_privacy: "Защита данных (Datenschutz)",
-            footer_contact: "Контакт (Kontakt)"
+            footer_contact: "Контакт (Kontakt)",
+            // Suchmaschinen: Titel und Beschreibung der Sprachseite
+            seo_title: "Oberschul-Helfer Berlin – из начальной в среднюю школу | Калькулятор оценок 5–6 класс",
+            seo_desc: "Бесплатный калькулятор оценок для Берлина: рассчитайте средний балл за 5 и 6 класс, проверьте сумму оценок и пригодность для Gymnasium (Förderprognose) и найдите школы рядом: Gymnasium, Integrierte Sekundarschule (ISS) и Gemeinschaftsschule. На русском, немецком, английском, турецком, арабском и украинском."
         }
     };
 
