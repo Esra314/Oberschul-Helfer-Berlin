@@ -150,8 +150,10 @@ Schule unter `offen` und die App zeigt „wird noch geprüft“. Braucht `curl` 
 Repository → Settings → Pages → Source: „Deploy from branch“, Branch `main`, Ordner `/ (root)`.
 Name und Anschrift in `impressum.html` und `datenschutz.html` sind eingetragen (Impressum-Service Autorenglück, Kundennummer #20605). Bei einem Umzug oder Wechsel des Dienstes beide Dateien anpassen.
 
-Die Adresse `https://esra314.github.io/Oberschul-Helfer-Berlin/` steht in `index.html`
-(canonical, hreflang, og:url, og:image), `sitemap.xml` und `robots.txt`. Bei einer eigenen Domain dort anpassen.
+Eigene Domain: `https://oberschulhelferberlin.de/` (Datei `CNAME`; in Settings → Pages „Enforce HTTPS“ an).
+Die alte Adresse `esra314.github.io/Oberschul-Helfer-Berlin/` leitet GitHub automatisch dorthin weiter.
+Die Adresse steht in `index.html` (hreflang, og:url, og:image), `sitemap.xml`, `robots.txt` und in den
+User-Agents der Skripte unter `scripts/`. Bei einem Domainwechsel dort anpassen.
 Danach die `sitemap.xml` in der Google Search Console einreichen.
 
 Sicherheit: Jede Seite hat eine Content-Security-Policy (meta-Tag). Es gibt keine Inline-Skripte;
@@ -171,8 +173,8 @@ Formulars nur die E-Mail-Adresse.
 1. Bei formdall.de kostenlos registrieren und den Auftragsverarbeitungsvertrag (AVV) bestätigen.
 2. Ein Formular anlegen, Captcha: **keins** (Spam-Schutz läuft über Honigtopf, Zeitsperre und Formdall-Spamfilter).
 3. Einstellungen: E-Mail-Aktion mit Empfänger = Impressum-Adresse; „Einsendungen speichern“ **aus** lassen,
-   Betreff z. B. `{{anliegen}} – {{seite}}`, erlaubte Herkunft = `esra314.github.io`,
-   Weiterleitungs-URL = `https://esra314.github.io/Oberschul-Helfer-Berlin/kontakt.html` (nur für Browser ohne JavaScript).
+   Betreff z. B. `{{anliegen}} – {{seite}}`, erlaubte Herkunft = `oberschulhelferberlin.de` (zur Sicherheit auch `esra314.github.io`),
+   Weiterleitungs-URL = `https://oberschulhelferberlin.de/kontakt.html` (nur für Browser ohne JavaScript).
 4. Die Formular-Adresse (`https://api.formdall.de/api/v1/f/…`) in `kontakt.html` im `action`-Attribut eintragen.
 
 Wird der Dienst gewechselt: `action` in `kontakt.html`, `connect-src`/`form-action` in der CSP

@@ -10,7 +10,7 @@ seen = set()
 for ls in range(0, 200, 10):
     url = f"{BASIS}index.php?ls={ls}&c=79&kategorie%5B47%5D=109&date_start={HEUTE}"
     for versuch in range(5):
-        r = subprocess.run(["curl", "-s", "-L", "-A", "Oberschul-Helfer-Berlin/1.0 (Schulinfo-Abruf; +https://esra314.github.io/Oberschul-Helfer-Berlin/kontakt.html)", "-w", "\n%{http_code}", url], capture_output=True, text=True)
+        r = subprocess.run(["curl", "-s", "-L", "-A", "Oberschul-Helfer-Berlin/1.0 (Schulinfo-Abruf; +https://oberschulhelferberlin.de/kontakt.html)", "-w", "\n%{http_code}", url], capture_output=True, text=True)
         body, code = r.stdout.rsplit("\n", 1)
         if code == "200":
             break
