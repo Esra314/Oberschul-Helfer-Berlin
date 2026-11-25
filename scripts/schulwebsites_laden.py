@@ -9,7 +9,7 @@ import sys, os, re, json, html, subprocess, time, threading
 import urllib.robotparser
 from urllib.parse import urljoin, urlparse
 
-UA = "Oberschul-Helfer-Berlin/1.0 (Schulinfo-Abruf; +https://esra314.github.io/Oberschul-Helfer-Berlin/kontakt.html)"
+UA = "Oberschul-Helfer-Berlin/1.0 (Schulinfo-Abruf; +https://oberschulhelferberlin.de/kontakt.html)"
 _robots = {}
 _robots_lock = threading.Lock()
 

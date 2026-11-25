@@ -1,6 +1,6 @@
-# Wirkt nur, wenn die Seite unter einer eigenen Domain läuft (robots.txt muss im Wurzelverzeichnis liegen).
-# Bei GitHub Pages die sitemap.xml in der Google Search Console einreichen.
+# Die Seite läuft unter der eigenen Domain oberschulhelferberlin.de, deshalb liegt diese Datei im Wurzelverzeichnis und wirkt.
+# Die sitemap.xml zusätzlich in der Google Search Console einreichen.
 User-agent: *
 Allow: /
 
-Sitemap: https://esra314.github.io/Oberschul-Helfer-Berlin/sitemap.xml
+Sitemap: https://oberschulhelferberlin.de/sitemap.xml

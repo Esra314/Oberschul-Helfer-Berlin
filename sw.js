@@ -7,7 +7,7 @@
  * kurzer Wartezeit die gespeicherte Kopie; die Antwort aus dem Netz aktualisiert den Speicher trotzdem.
  * VERSION nur erhöhen, wenn sich die Liste DATEIEN ändert.
  */
-const VERSION = "v15";
+const VERSION = "v16";
 const CACHE = "oberschul-helfer-" + VERSION;
 
 const DATEIEN = [
@@ -90,6 +90,11 @@ self.addEventListener("fetch", (event) => {
         return undefined;
     };
     const ausNetz = netz.then((antwort) => {
+        // Seite wurde umgezogen (z. B. neue Domain): Browser sauber weiterleiten,
+        // denn eine umgeleitete Antwort darf eine Seitennavigation nicht direkt beantworten.
+        if (anfrage.mode === "navigate" && antwort.redirected) {
+            return Response.redirect(antwort.url, 302);
+        }
         if (antwort.ok && antwort.type === "basic") {
             const kopie = antwort.clone();
             caches.open(CACHE).then((cache) => cache.put(anfrage, kopie));
