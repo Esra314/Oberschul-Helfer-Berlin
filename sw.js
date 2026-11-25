@@ -7,12 +7,17 @@
  * kurzer Wartezeit die gespeicherte Kopie; die Antwort aus dem Netz aktualisiert den Speicher trotzdem.
  * VERSION nur erhöhen, wenn sich die Liste DATEIEN ändert.
  */
-const VERSION = "v16";
+const VERSION = "v17";
 const CACHE = "oberschul-helfer-" + VERSION;
 
 const DATEIEN = [
     "./",
     "index.html",
+    "en/",
+    "tr/",
+    "ar/",
+    "uk/",
+    "ru/",
     "impressum.html",
     "datenschutz.html",
     "kontakt.html",
