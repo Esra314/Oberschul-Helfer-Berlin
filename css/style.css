@@ -3458,3 +3458,29 @@ button.kalender-option:hover {
         justify-self: stretch;
     }
 }
+
+/* ---------- Teilen und Korrektur vorschlagen ---------- */
+.teilen-hinweis,
+.teilen-status {
+    margin: 6px 0 0;
+}
+
+.teilen-status {
+    margin-bottom: 10px;
+    color: var(--gruen);
+    font-weight: 600;
+}
+
+.teilen-status:empty {
+    display: none;
+}
+
+.korrektur-link {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 0.875rem;
+}
+
+@media print {
+    .korrektur-link { display: none; }
+}

@@ -172,6 +172,8 @@
         // Kontaktseite öffnet sich in derselben Sprache
         var kontaktLink = document.querySelector('.seitenfuss a[href^="kontakt.html"]');
         if (kontaktLink) kontaktLink.setAttribute("href", "kontakt.html" + (code === "de" ? "" : "?lang=" + code));
+        var vorschlagLink = document.getElementById("vorschlagLink");
+        if (vorschlagLink) vorschlagLink.setAttribute("href", kontaktUrl("idee"));
 
         if (letztesErgebnis) {
             zeigeErgebnis(letztesErgebnis);
@@ -864,6 +866,23 @@
         return el;
     }
 
+    // Link zur Kontaktseite in der aktuellen Sprache, optional mit Thema und Schule
+    function kontaktUrl(thema, schule) {
+        var p = new URLSearchParams();
+        if (aktuelleSprache !== "de") p.set("lang", aktuelleSprache);
+        if (thema) p.set("thema", thema);
+        if (schule) p.set("schule", schule);
+        var q = p.toString();
+        return "kontakt.html" + (q ? "?" + q : "");
+    }
+
+    // „Angabe falsch? Korrektur vorschlagen“ unter den Angaben einer Schule
+    function korrekturLink(schule) {
+        var a = element("a", "korrektur-link", "✏️ " + t("fix_link"));
+        a.href = kontaktUrl("daten", schule);
+        return a;
+    }
+
     function chip(text, klasse, titel) {
         var c = element("span", "chip" + (klasse ? " " + klasse : ""), text);
         if (titel) c.title = titel;
@@ -1157,6 +1176,7 @@
         // 7. Eine Quellenzeile
         details.appendChild(element("p", "quelle-zeile",
             "ⓘ " + t("source_line", { datum: infoStand ? datum(infoStand) : "–" })));
+        details.appendChild(korrekturLink(s.n));
         return details;
     }
 
@@ -1542,6 +1562,28 @@
 
     document.getElementById("drucken").addEventListener("click", function () {
         window.print();
+    });
+
+    // Seite teilen: nur der Link zur Startseite (in der gewählten Sprache), nie Noten oder Eingaben
+    function teileSeite(status) {
+        var url = window.location.origin + window.location.pathname.replace(/index\.html$/, "") +
+            (aktuelleSprache === "de" ? "" : "?lang=" + aktuelleSprache);
+        var marke = document.querySelector(".hero-marke");
+        if (status) status.textContent = "";
+        if (navigator.share) {
+            navigator.share({ title: marke ? marke.textContent.trim() : document.title, text: t("share_text"), url: url })
+                .catch(function () { /* abgebrochen */ });
+            return;
+        }
+        var zeige = function (text) { if (status) status.textContent = text; };
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(url).then(function () { zeige(t("share_copied")); }, function () { zeige(url); });
+        } else {
+            zeige(url);
+        }
+    }
+    document.getElementById("teilen").addEventListener("click", function () {
+        teileSeite(document.getElementById("teilenStatus"));
     });
 
     // Als App installierbar und offline nutzbar (nur über https oder localhost)
