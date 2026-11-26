@@ -7,7 +7,7 @@
  * kurzer Wartezeit die gespeicherte Kopie; die Antwort aus dem Netz aktualisiert den Speicher trotzdem.
  * VERSION nur erhöhen, wenn sich die Liste DATEIEN ändert.
  */
-const VERSION = "v17";
+const VERSION = "v18";
 const CACHE = "oberschul-helfer-" + VERSION;
 
 const DATEIEN = [
@@ -40,6 +40,7 @@ const DATEIEN = [
     "js/assistent.js",
     "js/kontakt-texte.js",
     "js/kontakt.js",
+    "js/besucherzaehler.js",
     "data/schulen.js",
     "data/schulinfos.js",
     "data/aufnahme.js",
